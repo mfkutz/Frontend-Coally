@@ -108,7 +108,7 @@ export default function EditTaskModal() {
                                         <textarea
                                             placeholder="Description..."
                                             maxLength={255}
-                                            {...register("description", { required: "Description is required" })}
+                                            {...register("description")}
                                             className="w-full p-4 text-[#cacde8] bg-[#25273c] px-6 pl-4 py-3 rounded-lg text-[13px] lg:text-[15px] mb-4 shadow-lg resize-none"
                                         />
                                         {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
