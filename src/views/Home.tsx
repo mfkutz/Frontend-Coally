@@ -78,7 +78,6 @@ export default function Home() {
         return <div className='bg-[#161722] h-screen flex text-center items-start justify-center text-white mt-4'>Error: {error instanceof Error ? error.message : "Unknown error"}</div>;
     }
 
-
     const handleStatusChange = (taskId: string, currentStatus: boolean) => {
         updateStatusMutate({ taskId, status: !currentStatus });
     };

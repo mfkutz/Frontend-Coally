@@ -1,50 +1,59 @@
-# React + TypeScript + Vite
+# Task Manager Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Link to app:
 
-Currently, two official plugins are available:
+A simple, intuitive, and efficient task management application designed to help you keep track of your tasks and stay organized.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Create, update, and delete tasks.
+- Responsive and modern design.
+- State management with Zustand.
+- Validation powered by Zod.
+- Notifications with React Toastify.
+- Optimized API interactions with Axios and React Query.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tech Stack and Dependencies
 
-- Configure the top-level `parserOptions` property like this:
+This project leverages several modern technologies to provide a seamless experience:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Dependencies
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **@headlessui/react**: Unstyled, fully accessible UI components for React.
+- **@tanstack/react-query**: Powerful data-fetching and state synchronization for your application.
+- **axios**: Simplified HTTP requests for API communication.
+- **react**: A JavaScript library for building user interfaces.
+- **react-dom**: Allows React components to render in the DOM.
+- **react-hook-form**: Lightweight library for form management in React.
+- **react-router-dom**: Declarative routing for React applications.
+- **react-toastify**: Provides elegant toast notifications.
+- **zod**: A TypeScript-first schema declaration and validation library.
+- **zustand**: A lightweight and scalable state management library.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Installation
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Follow these steps to set up and run the project locally:
+
+### Prerequisites
+
+- Node.js (>= 14) and npm/yarn installed on your system.
+
+### Steps
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/mfkutz/Frontend-Coally.git
+   cd <repository-folder>
+   ```
+2. Install dependencies:
+   ```
+   npm install
+   ```
+3. Start the development server:
+   ```
+   npm run dev
+   ```
+4. Open your browser and visit:
+   ```
+   http://localhost:5173/
+   ```

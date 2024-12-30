@@ -41,14 +41,14 @@ export default function RegisterView() {
 
     return (
         <>
-            <p className="text-2xl font-light text-white mt-5 mx-5">
+            <p className="text-2xl font-light text-white mt-0 mx-5">
                 Fill out the form to {''}
                 <span className=" text-blue-300 font-bold"> create your account</span>
             </p>
 
             <form
                 onSubmit={handleSubmit(handleRegister)}
-                className="space-y-8 p-10  bg-white mt-10 mx-5"
+                className="space-y-8 p-10  bg-white mt-8 mx-5"
                 noValidate
             >
 
