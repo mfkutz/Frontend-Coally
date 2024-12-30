@@ -43,17 +43,20 @@ Follow these steps to set up and run the project locally:
 1. Clone this repository:
    ```bash
    git clone https://github.com/mfkutz/Frontend-Coally.git
+   ```
+2. Navegate to directory app:
+   ```
    cd <repository-folder>
    ```
-2. Install dependencies:
+3. Install dependencies:
    ```
    npm install
    ```
-3. Start the development server:
+4. Start the development server:
    ```
    npm run dev
    ```
-4. Open your browser and visit:
+5. Open your browser and visit:
    ```
    http://localhost:5173/
    ```
