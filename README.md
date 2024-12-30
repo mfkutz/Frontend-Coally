@@ -60,3 +60,7 @@ Follow these steps to set up and run the project locally:
    ```
    http://localhost:5173/
    ```
+6. See .env.local example:
+   ```
+   .env.local.example
+   ```
