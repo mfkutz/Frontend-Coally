@@ -84,7 +84,7 @@ export default function EditTaskModal() {
                                 </Dialog.Title>
 
                                 <p className="text-xl font-bold text-white">Make changes to a task in {''}
-                                    <span className="text-fuchsia-600">this form</span>
+                                    <span className="text-blue-600">this form</span>
                                 </p>
 
                                 <form
