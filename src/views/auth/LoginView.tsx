@@ -31,10 +31,10 @@ export default function LoginView() {
         <>
             <form
                 onSubmit={handleSubmit(handleLogin)}
-                className="space-y-8 p-10 bg-white"
+                className="space-y-8 p-10 bg-white mx-5"
                 noValidate
             >
-                <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-5 ">
                     <label
                         className="font-normal text-2xl"
                     >Email</label>
@@ -82,7 +82,7 @@ export default function LoginView() {
                 />
             </form>
 
-            <nav className="mt-10 flex flex-col space-y-4">
+            <nav className="mt-10 flex flex-col space-y-4 mx-5">
                 <Link
                     to={'/auth/register'}
                     className="text-center text-gray-300 font-normal"

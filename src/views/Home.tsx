@@ -12,7 +12,7 @@ export default function Home() {
 
     const { filter, setFilter } = useTaskStore()
 
-    const handleFilterChange = (newFilter: 'all' | 'active' | 'completed') => {
+    const handleFilterChange = (newFilter: 'all' | 'pending' | 'completed') => {
         setFilter(newFilter);
     };
 
@@ -92,7 +92,7 @@ export default function Home() {
     };
 
     const filteredTasks: Task[] = data?.filter((task: Task) => {
-        if (filter === 'active') {
+        if (filter === 'pending') {
             return !task.status;
         } else if (filter === 'completed') {
             return task.status;
@@ -106,7 +106,7 @@ export default function Home() {
 
                 <div className="flex items-center justify-between mt-10 mb-5">
                     <h1 className="md:text-[2.5rem] text-[1.7rem] font-bold tracking-[0.9rem] text-white">
-                        TODO
+                        TASKS
                     </h1>
 
                     <button
@@ -176,20 +176,20 @@ export default function Home() {
                     <div> {filteredTasks?.length} items</div>
                     <div className="flex gap-4 footer">
                         <button
-                            className={`hover:text-black dark:hover:text-blue-400 font-bold transition-colors duration-300`}
+                            className={`hover:text-black dark:hover:text-blue-400 font-bold transition-colors duration-300 ${filter === "all" ? "text-blue-400" : ""}`}
                             onClick={() => handleFilterChange('all')}
                         >
                             All
                         </button>
                         <button
-                            className={`hover:text-black dark:hover:text-blue-400  font-bold transition-colors duration-300 `}
-                            onClick={() => handleFilterChange('active')}
+                            className={`hover:text-black dark:hover:text-blue-400  font-bold transition-colors duration-300 ${filter === "pending" ? "text-blue-400" : ""} `}
+                            onClick={() => handleFilterChange('pending')}
 
                         >
                             Pending
                         </button>
                         <button
-                            className={`hover:text-black dark:hover:text-blue-400  font-bold transition-colors duration-300 `}
+                            className={`hover:text-black dark:hover:text-blue-400  font-bold transition-colors duration-300 ${filter === "completed" ? "text-blue-400" : ""} `}
                             onClick={() => handleFilterChange('completed')}
                         >
                             Completed

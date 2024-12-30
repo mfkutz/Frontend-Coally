@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 interface TaskState {
-    filter: 'all' | 'active' | 'completed';
-    setFilter: (filter: 'all' | 'active' | 'completed') => void;
+    filter: 'all' | 'pending' | 'completed';
+    setFilter: (filter: 'all' | 'pending' | 'completed') => void;
 }
 
 export const useTaskStore = create<TaskState>((set) => ({
