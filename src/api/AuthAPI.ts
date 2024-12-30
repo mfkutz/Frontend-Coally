@@ -28,7 +28,6 @@ export async function authenticateUser(formData: UserLoginForm) {
     }
 }
 
-
 export async function getUser() {
     try {
         const { data } = await api('/auth/current')

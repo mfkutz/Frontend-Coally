@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query"
 import { toast } from 'react-toastify'
-import { createTask, deleteTask, getAllTasks } from '../api/TaskAPI';
-import { TaskFormData } from '../types';
+import { createTask, deleteTask, getAllTasks, updateStatus } from '../api/TaskAPI';
+import { Task, TaskFormData } from '../types';
 import Tasks from '../components/Tasks';
+import { useState } from 'react';
 
 export default function Home() {
+
+    const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
 
     const queryClient = useQueryClient()
     const navigate = useNavigate()
@@ -20,7 +23,7 @@ export default function Home() {
             toast.error(error.message || "Failed to create task")
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["tasks"])
+            queryClient.invalidateQueries({ queryKey: ["tasks"] })
             toast.success("Task created successfuly");
             reset()
         }
@@ -32,8 +35,20 @@ export default function Home() {
             toast.error(error.message || "Failed to delete task")
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["tasks"]);
+            queryClient.invalidateQueries({ queryKey: ["tasks"] });
             toast.success("Task deleted successfully");
+        }
+    });
+
+
+    const { mutate: updateStatusMutate } = useMutation({
+        mutationFn: updateStatus,
+        onError: (error) => {
+            toast.error(error.message || "Failed to update task status");
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["tasks"] });
+            toast.success("Task status updated successfully");
         }
     });
 
@@ -54,17 +69,18 @@ export default function Home() {
     })
 
     if (isLoading) {
-        return <div>Loading tasks...</div>;
+        return <div className='bg-[#161722] h-screen flex text-center items-start justify-center text-white mt-4'>Loading tasks...</div>;
     }
 
     if (isError) {
-        return <div>Error: {error instanceof Error ? error.message : "Unknown error"}</div>;
+        return <div className='bg-[#161722] h-screen flex text-center items-start justify-center text-white mt-4'>Error: {error instanceof Error ? error.message : "Unknown error"}</div>;
     }
 
 
+    const handleStatusChange = (taskId: string, currentStatus: boolean) => {
+        updateStatusMutate({ taskId, status: !currentStatus });
+    };
 
-
-    console.log(data)
     const handleDelete = (taskId: string) => {
         deleteTaskMutate({ taskId });
     };
@@ -73,12 +89,27 @@ export default function Home() {
         navigate(`/edit/${taskId}`);
     };
 
+    const filteredTasks: Task[] = data?.filter((task: Task) => {
+        if (filter === 'active') {
+            return !task.status;
+        } else if (filter === 'completed') {
+            return task.status;
+        }
+        return true;
+    });
+
+
+    const handleFilterChange = (newFilter: 'all' | 'active' | 'completed') => {
+        setFilter(newFilter);
+    };
+
+
     return (
         <div className="flex relative min-h-screen bg-[#161722] transition duration-500">
-            <div className="wrapper m-2 absolute inset-y-0 inset-x-0 mx-auto">
+            <div className="max-w-[550px] m-2 absolute inset-y-0 inset-x-0 mx-auto">
 
-                <div className="flex items-center justify-between pt-[1.3rem] sm:pt-[2rem] lg:pt-[3.4rem] pb-[1.5rem]  sm:pb-[1.7rem] lg:pb-[1.85rem]">
-                    <h1 className="lg:text-[2.5rem] text-[1.5rem] font-bold tracking-[0.9rem] text-white pt-2">
+                <div className="flex items-center justify-between mt-10 mb-5">
+                    <h1 className="md:text-[2.5rem] text-[1.7rem] font-bold tracking-[0.9rem] text-white">
                         TODO
                     </h1>
 
@@ -91,7 +122,7 @@ export default function Home() {
                 </div>
 
                 <div className="relative">
-                    <div className="absolute rounded-full flex w-[1.2rem] h-[1.2rem] lg:w-[1.5rem] lg:h-[1.5rem] items-center justify-center border border-gray-200 top-[0.9rem] left-[1.2rem] lg:top-5 lg:left-6"></div>
+                    <div className="absolute rounded-full flex w-[1.2rem] h-[1.2rem] md:w-[1.5rem] md:h-[1.5rem] items-center justify-center border border-gray-200 top-[0.9rem] left-[1.2rem] md:top-5 md:left-6"></div>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
 
@@ -101,7 +132,7 @@ export default function Home() {
                                 placeholder="Create a new todo..."
                                 maxLength={52}
                                 {...register("title", { required: "Title is required" })}
-                                className=" w-full p-3 text-[#cacde8] bg-[#25273c]  px-[1.5rem] pl-[3.5rem] lg:pl-[4.4rem] py-[1rem] lg:py-[1.2rem] rounded-[5px] text-[12px] lg:text-[18px] mb-[1.5rem] shadow-sm "
+                                className=" w-full p-3 text-[#cacde8] bg-[#25273c]  px-[1.5rem] pl-[3.5rem] md:pl-[4.4rem] py-[1rem] md:py-[1.2rem] rounded-[5px] text-[12px] md:text-[15px] mb-[1.5rem] shadow-sm "
                             />
                             {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                         </div>
@@ -111,13 +142,13 @@ export default function Home() {
                                 placeholder="Description..."
                                 maxLength={255}
                                 {...register("description", { required: "Description is required" })}
-                                className="w-full p-4 text-[#cacde8] bg-[#25273c] px-6 pl-4 py-3 rounded-lg text-[13px] lg:text-[15px] mb-4 shadow-lg resize-none"
+                                className="w-full p-4 text-[#cacde8] bg-[#25273c] px-6 pl-4 py-3 rounded-lg text-[13px] md:text-[15px] mb-4 shadow-lg resize-none"
                             />
                             {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
                         </div>
 
                         <button
-                            className='absolute right-[1rem] top-[1.1rem]  font-bold text-blue-600 text-[20px]'
+                            className='absolute right-[1rem] top-[0.8rem] md:top-[1.1rem]  font-bold text-blue-600 text-[16px] md:text-[20px]'
                             type='submit'
                         >
                             Add
@@ -127,46 +158,48 @@ export default function Home() {
                 </div>
 
                 <div>
-                    {data && data.length === 0 ? (
+                    {filteredTasks?.length === 0 ? (
                         <div className='text-white text-center mb-4'>No tasks available</div>
                     ) : (
-                        data.map((task) => (
+                        filteredTasks.map((task) => (
                             <Tasks
                                 key={task._id}
                                 title={task.title}
+                                created={task.createdAt}
                                 description={task.description}
+                                status={task.status}
                                 onEdit={() => handleEdit(task._id)}
                                 onDelete={() => handleDelete(task._id)}
+                                onStatusChange={() => handleStatusChange(task._id, task.status)}
                             />
                         ))
                     )}
                 </div>
 
                 <footer className="flex dark:bg-[#25273c]  bg-white border-b border-l border-r dark:border-none border-gray-200   rounded-b-[5px] justify-between px-6 py-[0.9rem] text-[14px] text-[#C8C5C4] shadow-2xl">
-                    <div> 0 items left</div>
+                    <div> {filteredTasks?.length} items</div>
                     <div className="flex gap-4 footer">
                         <button
                             className={`hover:text-black dark:hover:text-blue-400 font-bold transition-colors duration-300`}
+                            onClick={() => handleFilterChange('all')}
                         >
                             All
                         </button>
                         <button
                             className={`hover:text-black dark:hover:text-blue-400  font-bold transition-colors duration-300 `}
+                            onClick={() => handleFilterChange('active')}
 
                         >
-                            Active
+                            Pending
                         </button>
                         <button
                             className={`hover:text-black dark:hover:text-blue-400  font-bold transition-colors duration-300 `}
+                            onClick={() => handleFilterChange('completed')}
                         >
                             Completed
                         </button>
                     </div>
-                    <button
-                        className="hover:text-black dark:hover:text-blue-400 transition-colors duration-300  "
-                    >
-                        Clear Completed
-                    </button>
+
                 </footer>
             </div>
         </div>

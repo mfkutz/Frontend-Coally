@@ -25,3 +25,18 @@ export type TaskFormData = {
     title: string;
     description: string;
 }
+
+export type UpdateTaskParams = {
+    taskId: string;
+    formData: TaskFormData;
+    status: boolean
+};
+
+
+export type Task = {
+    _id: string;
+    title: string;
+    description: string;
+    status: boolean;
+    createdAt: string
+};

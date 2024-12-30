@@ -16,7 +16,7 @@ export default function AppLayout() {
 
     if (data) return (
         <>
-            <section>
+            <section className="px-5">
                 <Outlet />
             </section>
             <ToastContainer
