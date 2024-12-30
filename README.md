@@ -2,6 +2,8 @@
 
 ## Link to app:
 
+https://frontend-coally.vercel.app/
+
 A simple, intuitive, and efficient task management application designed to help you keep track of your tasks and stay organized.
 
 ## Features
