@@ -6,17 +6,19 @@ import { toast } from 'react-toastify'
 import { createTask, deleteTask, getAllTasks, updateStatus } from '../api/TaskAPI';
 import { Task, TaskFormData } from '../types';
 import Tasks from '../components/Tasks';
-import { useState } from 'react';
+import { useTaskStore } from '../store';
 
 export default function Home() {
 
-    const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+    const { filter, setFilter } = useTaskStore()
+
+    const handleFilterChange = (newFilter: 'all' | 'active' | 'completed') => {
+        setFilter(newFilter);
+    };
 
     const queryClient = useQueryClient()
     const navigate = useNavigate()
-
     const { register, handleSubmit, reset, formState: { errors } } = useForm<TaskFormData>()
-
     const { mutate } = useMutation({
         mutationFn: createTask,
         onError: (error) => {
@@ -97,12 +99,6 @@ export default function Home() {
         }
         return true;
     });
-
-
-    const handleFilterChange = (newFilter: 'all' | 'active' | 'completed') => {
-        setFilter(newFilter);
-    };
-
 
     return (
         <div className="flex relative min-h-screen bg-[#161722] transition duration-500">
