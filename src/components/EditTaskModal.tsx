@@ -99,7 +99,7 @@ export default function EditTaskModal() {
                                             placeholder="Create a new todo..."
                                             maxLength={52}
                                             {...register("title", { required: "Title is required" })}
-                                            className=" w-full p-3 text-[#cacde8] bg-[#25273c]  px-[1.5rem] pl-[3.5rem] lg:pl-[1rem] py-[1rem] lg:py-[1.2rem] rounded-[5px] text-[12px] lg:text-[18px] mb-[1.5rem] shadow-sm "
+                                            className=" w-full p-3 text-[#cacde8] bg-[#25273c]  px-[1.5rem] pl-[1rem] lg:pl-[1rem] py-[1rem] lg:py-[1.2rem] rounded-[5px] text-[12px] lg:text-[18px] mb-[1.5rem] shadow-sm "
                                         />
                                         {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
                                     </div>
